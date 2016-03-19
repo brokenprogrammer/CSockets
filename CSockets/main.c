@@ -26,9 +26,55 @@
  */
 
 #include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 
 int main(int argc, const char * argv[]) {
     // insert code here...
+    
+    int status;
+    struct addrinfo hints, *res, *p;
+    char ipstr[INET6_ADDRSTRLEN];
+    
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;     //Doesn't matter if IPv4 or IPv6
+    hints.ai_socktype = SOCK_STREAM; //Use a TCP connection.
+    
+    //Connecting using getaddrinfo and checking if there is an error.
+    if ((status = getaddrinfo("www.oskarmendel.me", NULL, &hints, &res)) != 0) {
+        //If error exists print it out and exit.
+        fprintf(stderr, "Error: %s\n", gai_strerror(status));
+        return 2;
+    }
+    
+    printf("IP Adress for: www.oskarmendel.me\n");
+    
+    for (p = res; p != NULL; p = p->ai_next) {
+        void *addr;
+        char *ipver;
+        
+        //Get the pointer to the actual address, different for IPv4 and IPv6
+        if (p->ai_family == AF_INET) { // IPv4
+            struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
+            addr = &(ipv4->sin_addr);
+            ipver = "IPv4";
+        } else { //IPv6
+            struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)p->ai_addr;
+            addr = &(ipv6)->sin6_addr;
+            ipver = "IPv6";
+        }
+        
+        //Convert IP to a string and print it
+        inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr);
+        printf("    %s: %s\n", ipver, ipstr);
+    }
+    
+    freeaddrinfo(res); //Free the linked list that we got from getaddrinfo.
+    
     printf("Hello, World!\n");
     return 0;
 }

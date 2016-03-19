@@ -34,13 +34,13 @@
 #include <netinet/in.h>
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    
     int status;
-    struct addrinfo hints, *res, *p;
-    char ipstr[INET6_ADDRSTRLEN];
+    struct addrinfo hints; //Criteria used when selecting socket address.
+    struct addrinfo *res;  //Linked list that getaddrinfo populates with data.
+    struct addrinfo *p;    //Pointer to res used to loop through the recieved data.
+    char ipstr[INET6_ADDRSTRLEN]; //String that we will later store an ip address in string form.
     
-    memset(&hints, 0, sizeof hints);
+    memset(&hints, 0, sizeof hints); //Populates hints with 0 on all the empty positions in the struct.
     hints.ai_family = AF_UNSPEC;     //Doesn't matter if IPv4 or IPv6
     hints.ai_socktype = SOCK_STREAM; //Use a TCP connection.
     
@@ -69,7 +69,7 @@ int main(int argc, const char * argv[]) {
         }
         
         //Convert IP to a string and print it
-        inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr);
+        inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr); //Converts the network address to presentation form (String).
         printf("    %s: %s\n", ipver, ipstr);
     }
     

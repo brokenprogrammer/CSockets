@@ -32,6 +32,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <errno.h>
 
 int main(int argc, const char * argv[]) {
     int scket; //Will be used to store file descriptor.
@@ -47,7 +48,7 @@ int main(int argc, const char * argv[]) {
     hints.ai_socktype = SOCK_STREAM; //Use a TCP connection.
     
     //Connecting using getaddrinfo and checking if there is an error.
-    if ((status = getaddrinfo("www.oskarmendel.me", NULL, &hints, &res)) != 0) {
+    if ((status = getaddrinfo("www.oskarmendel.me", "80", &hints, &res)) != 0) {
         //If error exists print it out and exit.
         fprintf(stderr, "Error: %s\n", gai_strerror(status));
         return 2;
@@ -66,7 +67,18 @@ int main(int argc, const char * argv[]) {
             ipver = "IPv4";
             
             //Creates a socket using the gathered information.
-            scket = socket(p->ai_flags, p->ai_socktype, p->ai_protocol);
+            scket = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
+            
+            //Bind mainly used in binding to a specific local IP address.
+            //bind(scket, p->ai_addr, p->ai_addrlen);
+            
+            //Socket connection to www.oskarmendel.me
+            if (connect(scket, p->ai_addr, p->ai_addrlen) != -1) {
+                printf("Connected to remote address. \n");
+            } else {
+                //Error logging
+                printf("Error connecting to remote host: %s\n", strerror(errno));
+            }
             
         } else { //IPv6
             struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)p->ai_addr;

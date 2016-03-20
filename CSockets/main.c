@@ -34,6 +34,8 @@
 #include <netinet/in.h>
 
 int main(int argc, const char * argv[]) {
+    int scket; //Will be used to store file descriptor.
+    
     int status;
     struct addrinfo hints; //Criteria used when selecting socket address.
     struct addrinfo *res;  //Linked list that getaddrinfo populates with data.
@@ -62,6 +64,10 @@ int main(int argc, const char * argv[]) {
             struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
             addr = &(ipv4->sin_addr);
             ipver = "IPv4";
+            
+            //Creates a socket using the gathered information.
+            scket = socket(p->ai_flags, p->ai_socktype, p->ai_protocol);
+            
         } else { //IPv6
             struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)p->ai_addr;
             addr = &(ipv6)->sin6_addr;
@@ -75,6 +81,5 @@ int main(int argc, const char * argv[]) {
     
     freeaddrinfo(res); //Free the linked list that we got from getaddrinfo.
     
-    printf("Hello, World!\n");
     return 0;
 }

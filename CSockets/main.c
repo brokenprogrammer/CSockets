@@ -50,6 +50,14 @@ void sigchld_handler(int s) {
     errno = saved_errno;
 }
 
+void *get_in_addr(struct sockaddr *sa) {
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in *)sa)->sin_addr);
+    }
+    
+    return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
+
 int main(int argc, const char * argv[]) {
     int sockfd = 0; //Will be used to store file descriptor.
     int connectedSock; //Socket connected to this application.
@@ -59,6 +67,7 @@ int main(int argc, const char * argv[]) {
     struct addrinfo *res;  //Linked list that getaddrinfo populates with data.
     struct addrinfo *p;    //Pointer to res used to loop through the recieved data.
     char ipstr[INET6_ADDRSTRLEN]; //String that we will later store an ip address in string form.
+    char s[INET6_ADDRSTRLEN]; //
     
     struct sockaddr_storage their_addr; //Connectors address information.
     socklen_t sin_size;
@@ -126,9 +135,28 @@ int main(int argc, const char * argv[]) {
     
     //Accept() loop
     while(1) {
+        sin_size = sizeof their_addr;
+        connectedSock = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
         
+        if (connectedSock == -1) {
+            printf("Error accepting connection: %s\n", strerror(errno));
+            continue;
+        }
+        
+        inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
+        
+        if (!fork()) {
+            close(sockfd);
+            if (send(connectedSock, "Welcome", 7, 0) == -1) {
+                printf("Error sending welcome message: %s\n", strerror(errno));
+            }
+            close(connectedSock);
+            
+            printf("Success\n");
+            
+            exit(0);
+        }
     }
     
-    printf("Success\n");
     return 0;
 }

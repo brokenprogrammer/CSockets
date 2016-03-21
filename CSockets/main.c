@@ -41,6 +41,15 @@
 #define PORT "3490"
 #define BACKLOG 10
 
+void sigchld_handler(int s) {
+    //Waitpid might overwrite errno.
+    int saved_errno = errno;
+    
+    while (waitpid(-1, NULL, WNOHANG) > 0);
+    
+    errno = saved_errno;
+}
+
 int main(int argc, const char * argv[]) {
     int sockfd = 0; //Will be used to store file descriptor.
     int connectedSock; //Socket connected to this application.
@@ -96,6 +105,8 @@ int main(int argc, const char * argv[]) {
     if (listen(sockfd, BACKLOG) == -1) {
         printf("Error listening: %s\n", strerror(errno));
     }
+    
+    
     
     printf("Success\n");
     return 0;

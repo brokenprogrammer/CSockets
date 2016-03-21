@@ -97,6 +97,13 @@ int main(int argc, const char * argv[]) {
             continue;
         }
         
+        
+        if (p->ai_family == AF_INET) {
+            struct sockaddr_in *ipv4 = (struct sockaddr_in*)p->ai_addr;
+            inet_ntop(p->ai_family, &ipv4->sin_addr, ipstr, sizeof ipstr);
+            printf("Server address bound: %s:%s\n", ipstr, PORT);
+        }
+        
         break;
     }
     
@@ -106,7 +113,21 @@ int main(int argc, const char * argv[]) {
         printf("Error listening: %s\n", strerror(errno));
     }
     
+    //Reep dead proccesses
+    sa.sa_handler = sigchld_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    if (sigaction(SIGCHLD, &sa, NULL) == -1) {
+        printf("Error running signal action: %s\n", strerror(errno));
+        exit(1);
+    }
     
+    printf("Waiting for connections...\n");
+    
+    //Accept() loop
+    while(1) {
+        
+    }
     
     printf("Success\n");
     return 0;

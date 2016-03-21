@@ -26,6 +26,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -33,9 +35,15 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <errno.h>
+#include <sys/wait.h>
+#include <signal.h>
+
+#define PORT "3490"
+#define BACKLOG 10
 
 int main(int argc, const char * argv[]) {
-    int scket; //Will be used to store file descriptor.
+    int sockfd = 0; //Will be used to store file descriptor.
+    int connectedSock; //Socket connected to this application.
     
     int status;
     struct addrinfo hints; //Criteria used when selecting socket address.
@@ -43,55 +51,52 @@ int main(int argc, const char * argv[]) {
     struct addrinfo *p;    //Pointer to res used to loop through the recieved data.
     char ipstr[INET6_ADDRSTRLEN]; //String that we will later store an ip address in string form.
     
+    struct sockaddr_storage their_addr; //Connectors address information.
+    socklen_t sin_size;
+    int yes = 1;
+    struct sigaction sa;
+    
     memset(&hints, 0, sizeof hints); //Populates hints with 0 on all the empty positions in the struct.
     hints.ai_family = AF_UNSPEC;     //Doesn't matter if IPv4 or IPv6
     hints.ai_socktype = SOCK_STREAM; //Use a TCP connection.
+    hints.ai_flags = AI_PASSIVE;     //Fill in my address for me.
     
     //Connecting using getaddrinfo and checking if there is an error.
-    if ((status = getaddrinfo("www.oskarmendel.me", "80", &hints, &res)) != 0) {
+    if ((status = getaddrinfo(NULL, PORT, &hints, &res)) != 0) {
         //If error exists print it out and exit.
         fprintf(stderr, "Error: %s\n", gai_strerror(status));
-        return 2;
+        return 1;
     }
     
-    printf("IP Adress for: www.oskarmendel.me\n");
+    printf("IP Adress for: Me\n");
+    
     
     for (p = res; p != NULL; p = p->ai_next) {
-        void *addr;
-        char *ipver;
-        
-        //Get the pointer to the actual address, different for IPv4 and IPv6
-        if (p->ai_family == AF_INET) { // IPv4
-            struct sockaddr_in *ipv4 = (struct sockaddr_in *)p->ai_addr;
-            addr = &(ipv4->sin_addr);
-            ipver = "IPv4";
-            
-            //Creates a socket using the gathered information.
-            scket = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
-            
-            //Bind mainly used in binding to a specific local IP address.
-            //bind(scket, p->ai_addr, p->ai_addrlen);
-            
-            //Socket connection to www.oskarmendel.me
-            if (connect(scket, p->ai_addr, p->ai_addrlen) != -1) {
-                printf("Connected to remote address. \n");
-            } else {
-                //Error logging
-                printf("Error connecting to remote host: %s\n", strerror(errno));
-            }
-            
-        } else { //IPv6
-            struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 *)p->ai_addr;
-            addr = &(ipv6)->sin6_addr;
-            ipver = "IPv6";
+        if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+            printf("Error creating socket: %s\n", strerror(errno));
+            continue; //This wont be usedso continue to next element in list.
         }
         
-        //Convert IP to a string and print it
-        inet_ntop(p->ai_family, addr, ipstr, sizeof ipstr); //Converts the network address to presentation form (String).
-        printf("    %s: %s\n", ipver, ipstr);
+        //Attempt to manipulate socket options.
+        if ((setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int))) == -1) {
+            printf("Error creating socket options: %s\n", strerror(errno));
+            exit(1);
+        }
+        
+        if ((bind(sockfd, p->ai_addr, p->ai_addrlen)) == -1) {
+            printf("Error binding: %s\n", strerror(errno));
+            continue;
+        }
+        
+        break;
     }
     
     freeaddrinfo(res); //Free the linked list that we got from getaddrinfo.
     
+    if (listen(sockfd, BACKLOG) == -1) {
+        printf("Error listening: %s\n", strerror(errno));
+    }
+    
+    printf("Success\n");
     return 0;
 }

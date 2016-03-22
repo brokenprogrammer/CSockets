@@ -35,20 +35,12 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <errno.h>
-#include <sys/wait.h>
 #include <signal.h>
+
+#include "process_handler.h"
 
 #define PORT "3490"
 #define BACKLOG 10
-
-void sigchld_handler(int s) {
-    //Waitpid might overwrite errno.
-    int saved_errno = errno;
-    
-    while (waitpid(-1, NULL, WNOHANG) > 0);
-    
-    errno = saved_errno;
-}
 
 void *get_in_addr(struct sockaddr *sa) {
     if (sa->sa_family == AF_INET) {

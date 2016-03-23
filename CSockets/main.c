@@ -36,11 +36,9 @@
 #include <errno.h>
 #include <signal.h>
 
+#include "options.h"
 #include "process_handler.h"
 #include "connection_handler.h"
-
-#define PORT "3490"
-#define BACKLOG 10
 
 int main(int argc, const char * argv[]) {
     int sockfd = 0; //Will be used to store file descriptor.
@@ -55,9 +53,9 @@ int main(int argc, const char * argv[]) {
     struct sigaction sa;
     
     memset(&hints, 0, sizeof hints); //Populates hints with 0 on all the empty positions in the struct.
-    hints.ai_family = AF_UNSPEC;     //Doesn't matter if IPv4 or IPv6
-    hints.ai_socktype = SOCK_STREAM; //Use a TCP connection.
-    hints.ai_flags = AI_PASSIVE;     //Fill in my address for me.
+    hints.ai_family   = SERVER_IPVER;     //Doesn't matter if IPv4 or IPv6
+    hints.ai_socktype = SERVER_SOCKTYPE;  //Use a TCP connection.
+    hints.ai_flags    = SERVER_FLAGS;     //Fill in my address for me.
     
     //Connecting using getaddrinfo and checking if there is an error.
     if ((status = getaddrinfo(NULL, PORT, &hints, &res)) != 0) {

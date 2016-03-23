@@ -69,6 +69,9 @@ void waitConnection (int sockfd) {
         
         if (!fork()) {
             close(sockfd);
+            
+            printf("Connection established with: %s\n", s);
+            
             if (send(connectedSock, "Welcome", 7, 0) == -1) {
                 printf("Error sending welcome message: %s\n", strerror(errno));
             }

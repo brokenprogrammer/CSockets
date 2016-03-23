@@ -27,6 +27,7 @@
 /* Begin PBXFileReference section */
 		AB4570941CA2C28500B7ADB1 /* connection_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = connection_handler.c; sourceTree = "<group>"; };
 		AB4570951CA2C28500B7ADB1 /* connection_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection_handler.h; sourceTree = "<group>"; };
+		AB4570971CA2C55E00B7ADB1 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
 		AB461AC91C9B53140052743E /* CSockets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSockets; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB461ACC1C9B53140052743E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AB6770451CA1D8720048CA31 /* process_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process_handler.c; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		AB461ACB1C9B53140052743E /* CSockets */ = {
 			isa = PBXGroup;
 			children = (
+				AB4570971CA2C55E00B7ADB1 /* options.h */,
 				AB461ACC1C9B53140052743E /* main.c */,
 				AB6770451CA1D8720048CA31 /* process_handler.c */,
 				AB6770461CA1D8720048CA31 /* process_handler.h */,

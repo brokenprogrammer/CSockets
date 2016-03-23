@@ -35,12 +35,27 @@
 #include <sys/types.h>
 #include <netdb.h>
 
+#include "system_control.h"
+
 void *get_in_addr(struct sockaddr *sa) {
     if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in *)sa)->sin_addr);
     }
     
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
+
+/**
+ * readCommand
+ * Reads string commands and preforms actions depending on what command
+ * was specified.
+ *
+ * @param s - String with command.
+ */
+void readCommand(char* s) {
+    if (strcmp(s, "system") == 0) {
+        //Make system call
+    }
 }
 
 /**

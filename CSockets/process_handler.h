@@ -25,8 +25,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef process_handler_h
-#define process_handler_h
+#ifndef PROCESS_HANDLER_H
+#define PROCESS_HANDLER_H
 
 #include <stdio.h>
 

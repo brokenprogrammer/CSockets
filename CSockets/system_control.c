@@ -25,17 +25,9 @@
  * THE SOFTWARE.
  */
 
-#ifndef CONNECTION_HANDLER_H
-#define CONNECTION_HANDLER_H
+#include "system_control.h"
 
-#include <stdio.h>
-
-/**
- * waitConnection
- * Waits for incoming connections to the server.
- *
- * @param sockfd - Socket file descriptor for the server connection.
- */
-void waitConnection (int sockfd);
-
-#endif /* connection_handler_h */
+int system_runCommand(char * c) {
+    
+    return 0;
+}

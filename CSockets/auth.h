@@ -25,17 +25,9 @@
  * THE SOFTWARE.
  */
 
-#ifndef CONNECTION_HANDLER_H
-#define CONNECTION_HANDLER_H
+#ifndef AUTH_H
+#define AUTH_H
 
 #include <stdio.h>
 
-/**
- * waitConnection
- * Waits for incoming connections to the server.
- *
- * @param sockfd - Socket file descriptor for the server connection.
- */
-void waitConnection (int sockfd);
-
-#endif /* connection_handler_h */
+#endif /* auth_h */

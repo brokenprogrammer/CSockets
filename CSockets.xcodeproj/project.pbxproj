@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB4570961CA2C28500B7ADB1 /* connection_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4570941CA2C28500B7ADB1 /* connection_handler.c */; };
 		AB461ACD1C9B53140052743E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AB461ACC1C9B53140052743E /* main.c */; };
 		AB6770471CA1D8720048CA31 /* process_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = AB6770451CA1D8720048CA31 /* process_handler.c */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB4570941CA2C28500B7ADB1 /* connection_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = connection_handler.c; sourceTree = "<group>"; };
+		AB4570951CA2C28500B7ADB1 /* connection_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection_handler.h; sourceTree = "<group>"; };
 		AB461AC91C9B53140052743E /* CSockets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSockets; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB461ACC1C9B53140052743E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AB6770451CA1D8720048CA31 /* process_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process_handler.c; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				AB461ACC1C9B53140052743E /* main.c */,
 				AB6770451CA1D8720048CA31 /* process_handler.c */,
 				AB6770461CA1D8720048CA31 /* process_handler.h */,
+				AB4570941CA2C28500B7ADB1 /* connection_handler.c */,
+				AB4570951CA2C28500B7ADB1 /* connection_handler.h */,
 			);
 			path = CSockets;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB4570961CA2C28500B7ADB1 /* connection_handler.c in Sources */,
 				AB6770471CA1D8720048CA31 /* process_handler.c in Sources */,
 				AB461ACD1C9B53140052743E /* main.c in Sources */,
 			);

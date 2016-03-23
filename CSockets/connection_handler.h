@@ -30,4 +30,12 @@
 
 #include <stdio.h>
 
+/**
+ * waitConnection
+ * Waits for incoming connections to the server.
+ *
+ * @param sockfd - Socket file descriptor for the server connection.
+ */
+void waitConnection (int sockfd);
+
 #endif /* connection_handler_h */

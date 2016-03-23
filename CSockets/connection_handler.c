@@ -26,3 +26,57 @@
  */
 
 #include "connection_handler.h"
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <netdb.h>
+
+void *get_in_addr(struct sockaddr *sa) {
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in *)sa)->sin_addr);
+    }
+    
+    return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
+
+/**
+ * waitConnection
+ * Waits for incoming connections to the server.
+ *
+ * @param sockfd - Socket file descriptor for the server connection.
+ */
+void waitConnection (int sockfd) {
+    int connectedSock; //Socket connected to this application.
+    struct sockaddr_storage their_addr; //Connectors address information.
+    socklen_t sin_size;
+    char s[INET6_ADDRSTRLEN]; //
+    
+    //Wait for incoming connections.
+    while(1) {
+        sin_size = sizeof their_addr;
+        connectedSock = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+        
+        if (connectedSock == -1) {
+            printf("Error accepting connection: %s\n", strerror(errno));
+            continue;
+        }
+        
+        inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
+        
+        if (!fork()) {
+            close(sockfd);
+            if (send(connectedSock, "Welcome", 7, 0) == -1) {
+                printf("Error sending welcome message: %s\n", strerror(errno));
+            }
+            close(connectedSock);
+            
+            printf("Success\n");
+            
+            exit(0);
+        }
+    }
+}

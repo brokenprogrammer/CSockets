@@ -26,8 +26,22 @@
  */
 
 #include "system_control.h"
+#include <stdlib.h>
+#include <string.h>
 
+/**
+ * system_runCommand
+ * Runs target command on the system.
+ *
+ * @param c - Command to run.
+ * @returns -1 on error.
+ */
 int system_runCommand(char * c) {
+    char command[50];
+    
+    strcpy(command, "ls -l");
+    
+    system(command);
     
     return 0;
 }

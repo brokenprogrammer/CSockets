@@ -55,6 +55,7 @@ void *get_in_addr(struct sockaddr *sa) {
 void readCommand(char* s) {
     if (strcmp(s, "system") == 0) {
         //Make system call
+        system_runCommand("ls");
     }
 }
 
@@ -90,6 +91,7 @@ void waitConnection (int sockfd) {
             if (send(connectedSock, "Welcome", 7, 0) == -1) {
                 printf("Error sending welcome message: %s\n", strerror(errno));
             }
+            readCommand("system");
             close(connectedSock);
             
             printf("Success\n");

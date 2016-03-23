@@ -114,5 +114,7 @@ int main(int argc, const char * argv[]) {
     //Accept() loop
     waitConnection(sockfd);
     
+    printf("Finished.. Closing.");
+    
     return 0;
 }

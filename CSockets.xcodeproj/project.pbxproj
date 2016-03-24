@@ -11,6 +11,7 @@
 		AB45709A1CA2D28E00B7ADB1 /* system_control.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4570981CA2D28E00B7ADB1 /* system_control.c */; };
 		AB45709D1CA2D2C500B7ADB1 /* auth.c in Sources */ = {isa = PBXBuildFile; fileRef = AB45709B1CA2D2C500B7ADB1 /* auth.c */; };
 		AB461ACD1C9B53140052743E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AB461ACC1C9B53140052743E /* main.c */; };
+		AB4A91D31CA4877C00237097 /* database.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4A91D11CA4877C00237097 /* database.c */; };
 		AB6770471CA1D8720048CA31 /* process_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = AB6770451CA1D8720048CA31 /* process_handler.c */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,8 @@
 		AB45709C1CA2D2C500B7ADB1 /* auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = auth.h; sourceTree = "<group>"; };
 		AB461AC91C9B53140052743E /* CSockets */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CSockets; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB461ACC1C9B53140052743E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		AB4A91D11CA4877C00237097 /* database.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = database.c; sourceTree = "<group>"; };
+		AB4A91D21CA4877C00237097 /* database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = database.h; sourceTree = "<group>"; };
 		AB6770451CA1D8720048CA31 /* process_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process_handler.c; sourceTree = "<group>"; };
 		AB6770461CA1D8720048CA31 /* process_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_handler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +83,8 @@
 				AB4570991CA2D28E00B7ADB1 /* system_control.h */,
 				AB45709B1CA2D2C500B7ADB1 /* auth.c */,
 				AB45709C1CA2D2C500B7ADB1 /* auth.h */,
+				AB4A91D11CA4877C00237097 /* database.c */,
+				AB4A91D21CA4877C00237097 /* database.h */,
 			);
 			path = CSockets;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			files = (
 				AB45709D1CA2D2C500B7ADB1 /* auth.c in Sources */,
 				AB4570961CA2C28500B7ADB1 /* connection_handler.c in Sources */,
+				AB4A91D31CA4877C00237097 /* database.c in Sources */,
 				AB6770471CA1D8720048CA31 /* process_handler.c in Sources */,
 				AB45709A1CA2D28E00B7ADB1 /* system_control.c in Sources */,
 				AB461ACD1C9B53140052743E /* main.c in Sources */,

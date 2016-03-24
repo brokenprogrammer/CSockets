@@ -95,7 +95,6 @@ void waitConnection (int sockfd) {
             close(connectedSock);
             
             printf("Success\n");
-            
             exit(0);
         }
     }

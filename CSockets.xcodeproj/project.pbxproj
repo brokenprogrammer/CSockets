@@ -12,6 +12,10 @@
 		AB45709D1CA2D2C500B7ADB1 /* auth.c in Sources */ = {isa = PBXBuildFile; fileRef = AB45709B1CA2D2C500B7ADB1 /* auth.c */; };
 		AB461ACD1C9B53140052743E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AB461ACC1C9B53140052743E /* main.c */; };
 		AB4A91D31CA4877C00237097 /* database.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4A91D11CA4877C00237097 /* database.c */; };
+		AB4B97361CA5EF1900A3007E /* process.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B97341CA5EF1900A3007E /* process.c */; };
+		AB4B97391CA5EF3B00A3007E /* user.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B97371CA5EF3B00A3007E /* user.c */; };
+		AB4B973C1CA5EF5100A3007E /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B973A1CA5EF5100A3007E /* debug.c */; };
+		AB4B973F1CA5EF6D00A3007E /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B973D1CA5EF6D00A3007E /* server.c */; };
 		AB6770471CA1D8720048CA31 /* process_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = AB6770451CA1D8720048CA31 /* process_handler.c */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +43,14 @@
 		AB461ACC1C9B53140052743E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AB4A91D11CA4877C00237097 /* database.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = database.c; sourceTree = "<group>"; };
 		AB4A91D21CA4877C00237097 /* database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = database.h; sourceTree = "<group>"; };
+		AB4B97341CA5EF1900A3007E /* process.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process.c; sourceTree = "<group>"; };
+		AB4B97351CA5EF1900A3007E /* process.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process.h; sourceTree = "<group>"; };
+		AB4B97371CA5EF3B00A3007E /* user.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = user.c; sourceTree = "<group>"; };
+		AB4B97381CA5EF3B00A3007E /* user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user.h; sourceTree = "<group>"; };
+		AB4B973A1CA5EF5100A3007E /* debug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
+		AB4B973B1CA5EF5100A3007E /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		AB4B973D1CA5EF6D00A3007E /* server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = server.c; sourceTree = "<group>"; };
+		AB4B973E1CA5EF6D00A3007E /* server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.h; sourceTree = "<group>"; };
 		AB6770451CA1D8720048CA31 /* process_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process_handler.c; sourceTree = "<group>"; };
 		AB6770461CA1D8720048CA31 /* process_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_handler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +97,14 @@
 				AB45709C1CA2D2C500B7ADB1 /* auth.h */,
 				AB4A91D11CA4877C00237097 /* database.c */,
 				AB4A91D21CA4877C00237097 /* database.h */,
+				AB4B97341CA5EF1900A3007E /* process.c */,
+				AB4B97351CA5EF1900A3007E /* process.h */,
+				AB4B97371CA5EF3B00A3007E /* user.c */,
+				AB4B97381CA5EF3B00A3007E /* user.h */,
+				AB4B973A1CA5EF5100A3007E /* debug.c */,
+				AB4B973B1CA5EF5100A3007E /* debug.h */,
+				AB4B973D1CA5EF6D00A3007E /* server.c */,
+				AB4B973E1CA5EF6D00A3007E /* server.h */,
 			);
 			path = CSockets;
 			sourceTree = "<group>";
@@ -148,8 +168,12 @@
 				AB45709D1CA2D2C500B7ADB1 /* auth.c in Sources */,
 				AB4570961CA2C28500B7ADB1 /* connection_handler.c in Sources */,
 				AB4A91D31CA4877C00237097 /* database.c in Sources */,
+				AB4B973C1CA5EF5100A3007E /* debug.c in Sources */,
 				AB6770471CA1D8720048CA31 /* process_handler.c in Sources */,
 				AB45709A1CA2D28E00B7ADB1 /* system_control.c in Sources */,
+				AB4B97361CA5EF1900A3007E /* process.c in Sources */,
+				AB4B97391CA5EF3B00A3007E /* user.c in Sources */,
+				AB4B973F1CA5EF6D00A3007E /* server.c in Sources */,
 				AB461ACD1C9B53140052743E /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

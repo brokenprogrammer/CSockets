@@ -27,3 +27,104 @@
 
 
 #include "server.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <signal.h>
+
+#include "options.h"
+#include "process_handler.h"
+#include "connection_handler.h"
+
+struct addrinfo serverInit(){
+    struct addrinfo hints;
+    
+    memset(&hints, 0, sizeof hints); //Populates hints with 0 on all the empty positions in the struct.
+    hints.ai_family   = SERVER_IPVER;     //Doesn't matter if IPv4 or IPv6
+    hints.ai_socktype = SERVER_SOCKTYPE;  //Use a TCP connection.
+    hints.ai_flags    = SERVER_FLAGS;     //Fill in my address for me.
+    
+    return hints;
+}
+
+
+void startServer() {
+    int sockfd = 0; //Will be used to store file descriptor.
+    
+    int status;
+    struct addrinfo hints; //Criteria used when selecting socket address.
+    struct addrinfo *res;  //Linked list that getaddrinfo populates with data.
+    struct addrinfo *p;    //Pointer to res used to loop through the recieved data.
+    char ipstr[INET6_ADDRSTRLEN]; //String that we will later store an ip address in string form.
+    
+    int yes = 1;
+    struct sigaction sa;
+    
+    hints = serverInit();
+    
+    //Connecting using getaddrinfo and checking if there is an error.
+    if ((status = getaddrinfo(NULL, PORT, &hints, &res)) != 0) {
+        //If error exists print it out and exit.
+        fprintf(stderr, "Error: %s\n", gai_strerror(status));
+        return;
+    }
+    
+    printf("IP Adress for: Me\n");
+    
+    
+    for (p = res; p != NULL; p = p->ai_next) {
+        if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+            printf("Error creating socket: %s\n", strerror(errno));
+            continue; //This wont be usedso continue to next element in list.
+        }
+        
+        //Attempt to manipulate socket options.
+        if ((setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int))) == -1) {
+            printf("Error creating socket options: %s\n", strerror(errno));
+            exit(1);
+        }
+        
+        if ((bind(sockfd, p->ai_addr, p->ai_addrlen)) == -1) {
+            printf("Error binding: %s\n", strerror(errno));
+            continue;
+        }
+        
+        
+        if (p->ai_family == AF_INET) {
+            struct sockaddr_in *ipv4 = (struct sockaddr_in*)p->ai_addr;
+            inet_ntop(p->ai_family, &ipv4->sin_addr, ipstr, sizeof ipstr);
+            printf("Server address bound: %s:%s\n", ipstr, PORT);
+        }
+        
+        break;
+    }
+    
+    freeaddrinfo(res); //Free the linked list that we got from getaddrinfo.
+    
+    if (listen(sockfd, BACKLOG) == -1) {
+        printf("Error listening: %s\n", strerror(errno));
+    }
+    
+    //Reap dead proccesses
+    sa.sa_handler = sigchld_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    if (sigaction(SIGCHLD, &sa, NULL) == -1) {
+        printf("Error running signal action: %s\n", strerror(errno));
+        exit(1);
+    }
+    
+    printf("Waiting for connections...\n");
+    
+    //Accept() loop
+    waitConnection(sockfd);
+    
+    printf("Finished.. Closing.");
+}

@@ -31,4 +31,6 @@
 
 #include <stdio.h>
 
+void startServer();
+
 #endif /* server_h */

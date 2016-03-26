@@ -31,4 +31,6 @@
 
 #include <stdio.h>
 
+pid_t newConnection();
+
 #endif /* process_h */

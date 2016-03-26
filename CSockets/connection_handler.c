@@ -36,6 +36,7 @@
 #include <netdb.h>
 
 #include "system_control.h"
+#include "process.h"
 
 void *get_in_addr(struct sockaddr *sa) {
     if (sa->sa_family == AF_INET) {
@@ -83,7 +84,9 @@ void waitConnection (int sockfd) {
         
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         
-        if (!fork()) {
+        pid_t childProcess = newConnection();
+        
+        if (childProcess == 0) {
             close(sockfd);
             
             printf("Connection established with: %s\n", s);

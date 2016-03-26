@@ -27,3 +27,21 @@
 
 
 #include "process.h"
+#include <unistd.h>
+
+pid_t newConnection() {
+    pid_t pid;
+    
+    pid = fork();
+    
+    if (pid >= 0) {
+        if (pid == 0) {
+            printf("Connection was successfull. (In Child Process)\n");
+        }
+    } else {
+        //Fork failed
+        return -1;
+    }
+    
+    return pid;
+}

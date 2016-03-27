@@ -61,6 +61,28 @@ void readCommand(char* s) {
 }
 
 /**
+ * getClientInput
+ * Uses recv to recieve messages from the client that has connected and then
+ * read the messages.
+ *
+ * @param sockfd - File descriptor to the connected client socket.
+ */
+void getClientInput(int sockfd) {
+    int readsize;
+    char clientMessage[1000];
+    
+    while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
+        for (int x = 0; x < strlen(clientMessage); x++) {
+            printf("%c", clientMessage[x]);
+        }
+    }
+    
+    if (readsize == 0) {
+        printf("Client disconnected\n");
+    }
+}
+
+/**
  * waitConnection
  * Waits for incoming connections to the server.
  *
@@ -94,7 +116,8 @@ void waitConnection (int sockfd) {
             if (send(connectedSock, "Welcome", 7, 0) == -1) {
                 printf("Error sending welcome message: %s\n", strerror(errno));
             }
-            readCommand("system");
+            //readCommand("system");
+            getClientInput(connectedSock);
             close(connectedSock);
             
             printf("Success\n");

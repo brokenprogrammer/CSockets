@@ -84,9 +84,9 @@ void waitConnection (int sockfd) {
         
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         
-        pid_t childProcess = newConnection();
+        pid_t childProcess = newProcess();
         
-        if (childProcess == 0) {
+        if (childProcess == 0) { //Child process
             close(sockfd);
             
             printf("Connection established with: %s\n", s);
@@ -98,7 +98,9 @@ void waitConnection (int sockfd) {
             close(connectedSock);
             
             printf("Success\n");
-            exit(0);
+            destroyProcess();
+        } else { // Parrent process
+            printf("From Parrent\n");
         }
     }
 }

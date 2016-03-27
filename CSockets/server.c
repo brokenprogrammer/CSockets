@@ -43,6 +43,12 @@
 #include "process_handler.h"
 #include "connection_handler.h"
 
+/**
+ * serverInit
+ * Initializes properties for server startup.
+ *
+ * @returns addrinfo with properties of how to setup server.
+ */
 struct addrinfo serverInit(){
     struct addrinfo hints;
     
@@ -54,7 +60,10 @@ struct addrinfo serverInit(){
     return hints;
 }
 
-
+/**
+ * startServer
+ * Starts the server by initiating and calling all preparation functions required.
+ */
 void startServer() {
     int sockfd = 0; //Will be used to store file descriptor.
     

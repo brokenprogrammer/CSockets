@@ -28,8 +28,17 @@
 
 #include "process.h"
 #include <unistd.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <stdlib.h>
 
-pid_t newConnection() {
+/**
+ * newProcess
+ * Creates a new child process and returns the new process id for the child.
+ *
+ * @returns process id for new child process.
+ */
+pid_t newProcess() {
     pid_t pid;
     
     pid = fork();
@@ -44,4 +53,12 @@ pid_t newConnection() {
     }
     
     return pid;
+}
+
+/**
+ * destroyProcess
+ * When a process is done we can call this to exit the calling process.
+ */
+void destroyProcess() {
+    exit(0);
 }

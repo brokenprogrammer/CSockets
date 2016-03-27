@@ -31,6 +31,10 @@
 
 #include <stdio.h>
 
+/**
+ * startServer
+ * Starts the server by initiating and calling all preparation functions required.
+ */
 void startServer();
 
 #endif /* server_h */

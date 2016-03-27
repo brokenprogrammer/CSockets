@@ -31,6 +31,18 @@
 
 #include <stdio.h>
 
-pid_t newConnection();
+/**
+ * newProcess
+ * Creates a new child process and returns the new process id for the child.
+ *
+ * @returns process id for new child process.
+ */
+pid_t newProcess();
+
+/**
+ * destroyProcess
+ * When a process is done we can call this to exit the calling process.
+ */
+void destroyProcess();
 
 #endif /* process_h */

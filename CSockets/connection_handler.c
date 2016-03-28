@@ -60,6 +60,7 @@ void readCommand(char* s) {
     } else {
         printf("Read a welcome message\n");
         //Attempt to start VLC with movie in fullscreen.
+        system_launchApplication("VLC");
     }
 }
 

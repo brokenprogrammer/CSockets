@@ -46,3 +46,21 @@ int system_runCommand(char * c) {
     
     return 0;
 }
+
+/**
+ * system_launchApplication
+ * Launches target application using system commands.
+ *
+ * @param c - Application to launch.
+ * @returns -1 on error.
+ */
+int system_launchApplication(char* c) {
+    printf("Launching VLC\n");
+    char command[1000];
+    strcpy(command, "open -a VLC \"/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]\" --args --intf macosx");
+    system(command);
+    
+    //Get process id of just opened VLC and store it in a process struct.
+    
+    return 0;
+}

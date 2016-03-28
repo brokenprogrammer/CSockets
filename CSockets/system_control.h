@@ -37,6 +37,15 @@
  * @param c - Command to run.
  * @returns -1 on error.
  */
-int system_runCommand(char * c);
+int system_runCommand(char* c);
+
+/**
+ * system_launchApplication
+ * Launches target application using system commands.
+ *
+ * @param c - Application to launch.
+ * @returns -1 on error.
+ */
+int system_launchApplication(char* c);
 
 #endif /* system_control_h */

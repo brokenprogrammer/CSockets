@@ -66,6 +66,20 @@ void destroyProcess() {
 /**
  *
  */
+int killProcess() {
+    return 0;
+}
+
+/**
+ *
+ */
+int getProcessData() {
+    return 0;
+}
+
+/**
+ *
+ */
 void pushProcess(struct processes *processList, char* name, pid_t pid) {
     struct processes *newprocess = (struct processes*)malloc(sizeof(*newprocess));
     

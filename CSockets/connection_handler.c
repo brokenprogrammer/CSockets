@@ -57,6 +57,9 @@ void readCommand(char* s) {
     if (strcmp(s, "system") == 0) {
         //Make system call
         system_runCommand("ls");
+    } else {
+        printf("Read a welcome message\n");
+        //Attempt to start VLC with movie in fullscreen.
     }
 }
 
@@ -72,9 +75,10 @@ void getClientInput(int sockfd) {
     char clientMessage[1000];
     
     while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
-        for (int x = 0; x < strlen(clientMessage); x++) {
+        for (int x = 0; x < 20; x++) {
             printf("%c", clientMessage[x]);
         }
+        readCommand(clientMessage);
     }
     
     if (readsize == 0) {

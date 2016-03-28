@@ -31,6 +31,13 @@
 
 #include <stdio.h>
 
+struct processes {
+    char* name;
+    pid_t pid;
+    
+    struct processes *next;
+};
+
 /**
  * newProcess
  * Creates a new child process and returns the new process id for the child.

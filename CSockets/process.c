@@ -43,8 +43,8 @@ pid_t newProcess() {
     
     pid = fork();
     
-    if (pid >= 0) {
-        if (pid == 0) {
+    if (pid >= 0) { //Fork successfull
+        if (pid == 0) { //If Child
             printf("Connection was successfull. (In Child Process)\n");
         }
     } else {
@@ -61,4 +61,30 @@ pid_t newProcess() {
  */
 void destroyProcess() {
     exit(0);
+}
+
+/**
+ *
+ */
+void pushProcess(struct processes *processList, char* name, pid_t pid) {
+    struct processes *newprocess = (struct processes*)malloc(sizeof(*newprocess));
+    
+    newprocess->name = name;
+    newprocess->pid = pid;
+}
+
+/**
+ *
+ */
+void popProcess(struct processes *processList) {
+    
+}
+
+/**
+ *
+ */
+void showActiveProcesses(struct processes *processList) {
+    for (; processList; processList = processList->next) {
+        printf("%s : %i", processList->name, processList->pid);
+    }
 }

@@ -61,6 +61,7 @@ int system_launchApplication(char* c) {
     system(command);
     
     //Get process id of just opened VLC and store it in a process struct.
+    // Put process related functions required to store processes in the process.c
     
     return 0;
 }

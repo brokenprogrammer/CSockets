@@ -45,7 +45,7 @@ pid_t newProcess() {
     
     if (pid >= 0) { //Fork successfull
         if (pid == 0) { //If Child
-            printf("Connection was successfull. (In Child Process)\n");
+            printf("Child process successfully created.\n");
         }
     } else {
         //Fork failed

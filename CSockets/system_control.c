@@ -28,6 +28,11 @@
 #include "system_control.h"
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <signal.h>
+
+#include "process.h"
 
 /**
  * system_runCommand
@@ -56,12 +61,26 @@ int system_runCommand(char * c) {
  */
 int system_launchApplication(char* c) {
     printf("Launching VLC\n");
-    char command[1000];
-    strcpy(command, "open -a VLC \"/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]\" --args --intf macosx");
-    system(command);
+    //strcpy(command, "open -a VLC \"/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]\" --args --intf macosx");
+    char *const parmList[] = {"/bin/ls", "-l", "/", NULL};
     
-    //Get process id of just opened VLC and store it in a process struct.
-    // Put process related functions required to store processes in the process.c
+    pid_t a = newProcess();
+    
+    if (a == 0) {
+        //Child process
+        execv("/bin/ls", parmList);
+        exit(0); // Should not get here.
+    } else {
+        // Parent
+        int r;
+        waitpid(a, &r, 0);
+        
+        if (r == 0) {
+            printf("Child application terminated successfully\n");
+        } else {
+            printf("Child application terminated with error\n");
+        }
+    }
     
     return 0;
 }

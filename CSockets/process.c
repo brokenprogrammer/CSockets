@@ -80,18 +80,24 @@ int getProcessData() {
 /**
  *
  */
-void pushProcess(struct processes *processList, char* name, pid_t pid) {
+void pushProcess(struct processes **processList, char* name, pid_t pid) {
     struct processes *newprocess = (struct processes*)malloc(sizeof(*newprocess));
     
     newprocess->name = name;
     newprocess->pid = pid;
+    newprocess->next = *processList;
+    
+    *processList = newprocess;
 }
 
 /**
  *
  */
-void popProcess(struct processes *processList) {
+void popProcess(struct processes **processList) {
+    struct processes *newstack = (*processList)->next;
     
+    free(*processList);
+    *processList = newstack;
 }
 
 /**
@@ -99,6 +105,6 @@ void popProcess(struct processes *processList) {
  */
 void showActiveProcesses(struct processes *processList) {
     for (; processList; processList = processList->next) {
-        printf("%s : %i", processList->name, processList->pid);
+        printf("%s : %i\n", processList->name, processList->pid);
     }
 }

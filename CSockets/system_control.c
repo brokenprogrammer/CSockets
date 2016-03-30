@@ -35,6 +35,13 @@
 #include "process.h"
 
 /**
+ *
+ */
+char * build_path() {
+    return "";
+}
+
+/**
  * system_runCommand
  * Runs target command on the system.
  *
@@ -62,13 +69,13 @@ int system_runCommand(char * c) {
 int system_launchApplication(char* c) {
     printf("Launching VLC\n");
     //strcpy(command, "open -a VLC \"/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]\" --args --intf macosx");
-    char *const parmList[] = {"/bin/ls", "-l", "/", NULL};
+    char *const parmList[] = {"/Applications/VLC.app/Contents/MacOS/VLC", "/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]", NULL};
     
     pid_t a = newProcess();
     
     if (a == 0) {
         //Child process
-        execv("/bin/ls", parmList);
+        execv("/Applications/VLC.app/Contents/MacOS/VLC", parmList);
         exit(0); // Should not get here.
     } else {
         // Parent
@@ -81,6 +88,6 @@ int system_launchApplication(char* c) {
             printf("Child application terminated with error\n");
         }
     }
-    
+
     return 0;
 }

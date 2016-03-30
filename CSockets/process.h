@@ -52,4 +52,10 @@ pid_t newProcess();
  */
 void destroyProcess();
 
+void pushProcess(struct processes **processList, char* name, pid_t pid);
+
+void popProcess(struct processes **processList);
+
+void showActiveProcesses(struct processes *processList);
+
 #endif /* process_h */

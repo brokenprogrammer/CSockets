@@ -73,6 +73,11 @@ int system_launchApplication(char* c) {
     
     pid_t a = newProcess();
     
+    if (a == -1) {
+        //Error
+        printf("Error occurr\n");
+    }
+    
     if (a == 0) {
         //Child process
         execv("/Applications/VLC.app/Contents/MacOS/VLC", parmList);

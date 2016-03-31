@@ -49,6 +49,7 @@ pid_t newProcess() {
         }
     } else {
         //Fork failed
+        
         return -1;
     }
     
@@ -78,10 +79,19 @@ int getProcessData() {
 }
 
 /**
+ * pushProcess
+ * Push a new processes struct in the target processes struct.
  *
+ * @param **processList - Pointer to a processes pointer.
+ * @param name - Pointer to a char string.
+ * @param pid - Process id.
  */
 void pushProcess(struct processes **processList, char* name, pid_t pid) {
     struct processes *newprocess = (struct processes*)malloc(sizeof(*newprocess));
+    
+    if (newprocess == NULL) {
+        return;
+    }
     
     newprocess->name = name;
     newprocess->pid = pid;
@@ -91,9 +101,16 @@ void pushProcess(struct processes **processList, char* name, pid_t pid) {
 }
 
 /**
+ * popProcess
+ * Pop the top element of the Stack and free the allocated memory of the element
+ * being popped.
  *
+ * @param **processList - Pointer to a processes pointer.
  */
 void popProcess(struct processes **processList) {
+    if (!*processList) {
+        return;
+    }
     struct processes *newstack = (*processList)->next;
     
     free(*processList);
@@ -101,7 +118,11 @@ void popProcess(struct processes **processList) {
 }
 
 /**
+ * showActiveProcesses
+ * Displays all content of a processes struct by printing out all the stored
+ * process and proccess id's. 
  *
+ * @param *processList - Pointer to a processes struct.
  */
 void showActiveProcesses(struct processes *processList) {
     for (; processList; processList = processList->next) {

@@ -52,10 +52,32 @@ pid_t newProcess();
  */
 void destroyProcess();
 
+/**
+ * pushProcess
+ * Push a new processes struct in the target processes struct.
+ *
+ * @param **processList - Pointer to a processes pointer.
+ * @param name - Pointer to a char string.
+ * @param pid - Process id.
+ */
 void pushProcess(struct processes **processList, char* name, pid_t pid);
 
+/**
+ * popProcess
+ * Pop the top element of the Stack and free the allocated memory of the element
+ * being popped.
+ *
+ * @param **processList - Pointer to a processes pointer.
+ */
 void popProcess(struct processes **processList);
 
+/**
+ * showActiveProcesses
+ * Displays all content of a processes struct by printing out all the stored
+ * process and proccess id's.
+ *
+ * @param *processList - Pointer to a processes struct.
+ */
 void showActiveProcesses(struct processes *processList);
 
 #endif /* process_h */

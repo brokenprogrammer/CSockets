@@ -31,7 +31,7 @@
 
 int main(int argc, const char * argv[]) {
     
-    struct processes *processList = malloc(sizeof(*processList));
+    /* struct processes *processList = malloc(sizeof(*processList));
     processList->name = "test1";
     processList->pid = 1;
     processList->next = NULL;
@@ -46,7 +46,8 @@ int main(int argc, const char * argv[]) {
     printf("Afterpop: \n");
     
     showActiveProcesses(processList);
-    //startServer();
+    */
+    startServer();
     
     return 0;
 }

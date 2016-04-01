@@ -29,6 +29,7 @@
 #define SYSTEM_CONTROL_H
 
 #include <stdio.h>
+#include "process.h"
 
 /**
  * system_runCommand
@@ -46,6 +47,6 @@ int system_runCommand(char* c);
  * @param c - Application to launch.
  * @returns -1 on error.
  */
-int system_launchApplication(char* c);
+int system_launchApplication(char* c, struct processes *processList);
 
 #endif /* system_control_h */

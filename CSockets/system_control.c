@@ -31,8 +31,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
-
-#include "process.h"
+#include <errno.h>
 
 /**
  *
@@ -66,7 +65,7 @@ int system_runCommand(char * c) {
  * @param c - Application to launch.
  * @returns -1 on error.
  */
-int system_launchApplication(char* c) {
+int system_launchApplication(char* c, struct processes *processList) {
     printf("Launching VLC\n");
     //strcpy(command, "open -a VLC \"/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]\" --args --intf macosx");
     char *const parmList[] = {"/Applications/VLC.app/Contents/MacOS/VLC", "/Users/oskarmendel/Music/Red Hot Chilli Peppers - Greatest Hits [Bubanee]", NULL};
@@ -81,9 +80,14 @@ int system_launchApplication(char* c) {
     if (a == 0) {
         //Child process
         execv("/Applications/VLC.app/Contents/MacOS/VLC", parmList);
-        exit(0); // Should not get here.
+        int errcode = errno;
+        exit(errcode); // Should not get here.
     } else {
         // Parent
+        
+        pushProcess(&processList, "VLC", a);
+        showActiveProcesses(processList);
+        
         int r;
         waitpid(a, &r, 0);
         

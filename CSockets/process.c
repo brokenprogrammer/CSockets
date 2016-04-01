@@ -93,6 +93,14 @@ void pushProcess(struct processes **processList, char* name, pid_t pid) {
         return;
     }
     
+    
+    if ((*processList)->name == NULL) {
+        (*processList)->name = name;
+        (*processList)->pid = pid;
+        (*processList)->next = NULL;
+        return;
+    }
+    
     newprocess->name = name;
     newprocess->pid = pid;
     newprocess->next = *processList;

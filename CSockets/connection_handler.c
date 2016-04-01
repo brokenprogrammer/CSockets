@@ -53,14 +53,14 @@ void *get_in_addr(struct sockaddr *sa) {
  *
  * @param s - String with command.
  */
-void readCommand(char* s) {
+void readCommand(char* s, struct processes *processList) {
     if (strcmp(s, "system") == 0) {
         //Make system call
         system_runCommand("ls");
     } else {
         printf("Read a welcome message\n");
         //Attempt to start VLC with movie in fullscreen.
-        system_launchApplication("VLC");
+        system_launchApplication("VLC", processList);
     }
 }
 
@@ -75,11 +75,17 @@ void getClientInput(int sockfd) {
     int readsize;
     char clientMessage[1000];
     
+    //Struct to hold application processes used by this connection.
+    struct processes *processList = malloc(sizeof(*processList));
+    processList->name = NULL;
+    processList->pid = -1;
+    processList->next = NULL;
+    
     while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
         for (int x = 0; x < 20; x++) {
             printf("%c", clientMessage[x]);
         }
-        readCommand(clientMessage);
+        readCommand(clientMessage, processList);
     }
     
     if (readsize == 0) {

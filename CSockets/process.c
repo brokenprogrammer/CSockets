@@ -65,10 +65,18 @@ void destroyProcess() {
 }
 
 /**
+ * killProcess
+ * Kills the target process by sending a kill signal to the process.
  *
+ * @param pid - The process id of target process.
+ * @returns -1 on error and errno is set appropriatley.
  */
-int killProcess() {
-    return 0;
+int killProcess(pid_t pid) {
+    int ret;
+    
+    ret = kill(pid, SIGKILL);
+    
+    return ret;
 }
 
 /**

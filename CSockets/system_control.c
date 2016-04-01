@@ -88,6 +88,8 @@ int system_launchApplication(char* c, struct processes *processList) {
         pushProcess(&processList, "VLC", a);
         showActiveProcesses(processList);
         
+        //TODO: Send keystrokes to applications.
+        
         int r;
         waitpid(a, &r, 0);
         

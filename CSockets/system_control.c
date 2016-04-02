@@ -37,6 +37,7 @@
  *
  */
 char * build_path() {
+    //If mac if linux different paths. Add it in for Mac.
     return "";
 }
 
@@ -89,7 +90,12 @@ int system_launchApplication(char* c, struct processes *processList) {
         showActiveProcesses(processList);
         
         //TODO: Send keystrokes to applications.
+        //system("/usr/bin/osascript -e \"tell application \"Finder\"\" -e \"set desktopSize to bounds of window of desktop\" -e \"end tell\" -e \"tell application \"Safari\"\" -e \"activate\" -e \"set bounds of window 1 to desktopSize\" -e \"end tell\"");
+        //system("/usr/bin/osascript -e \"tell application \"System Events\"\" -e \"set frontmost of process \"VLC\" to true\" -e \"keystroke \"1\" using command down\" -e \"delay 0.2\" -e \"end tell\" ");
         
+        system("/usr/bin/osascript -e 'tell application \"VLC\"' -e 'activate' -e 'tell application \"System Events\"' -e 'keystroke \"f\" using {control down, command down}' -e 'end tell' -e 'end tell'");
+        
+        printf("After systemcall\n");
         int r;
         waitpid(a, &r, 0);
         

@@ -25,32 +25,16 @@
  * THE SOFTWARE.
  */
 
-#include "server.h"
-#include "process.h"
-#include <stdlib.h>
-#include "osx_window_handler.h"
+#import "osx_window_handler.h"
 
-int main(int argc, const char * argv[]) {
+@implementation osx_window_handler {
     
-    /* struct processes *processList = malloc(sizeof(*processList));
-    processList->name = "test1";
-    processList->pid = 1;
-    processList->next = NULL;
-    
-    pushProcess(&processList, "test2", 2);
-    pushProcess(&processList, "test3", 3);
-    
-    showActiveProcesses(processList);
-    
-    popProcess(&processList);
-    
-    printf("Afterpop: \n");
-    
-    showActiveProcesses(processList);
-    */
-    
-    
-    //startServer();
-    
-    return 0;
 }
+
+- (int) sum:(int)a :(int)b {
+    // The Objective-C function you wanted to call from C++.
+    // do work here..
+    return a + b ;
+}
+
+@end

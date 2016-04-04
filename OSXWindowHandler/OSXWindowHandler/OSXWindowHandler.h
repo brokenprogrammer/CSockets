@@ -25,32 +25,10 @@
  * THE SOFTWARE.
  */
 
-#include "server.h"
-#include "process.h"
-#include <stdlib.h>
-#include "OSXWindowHandler.h"
+#import <Foundation/Foundation.h>
 
-int main(int argc, const char * argv[]) {
-    
-    /* struct processes *processList = malloc(sizeof(*processList));
-    processList->name = "test1";
-    processList->pid = 1;
-    processList->next = NULL;
-    
-    pushProcess(&processList, "test2", 2);
-    pushProcess(&processList, "test3", 3);
-    
-    showActiveProcesses(processList);
-    
-    popProcess(&processList);
-    
-    printf("Afterpop: \n");
-    
-    showActiveProcesses(processList);
-    */
-    
-    
-    //startServer();
-    
-    return 0;
-}
+@interface OSXWindowHandler : NSObject
+
+- (int) sum: (int) a :(int) b;
+
+@end

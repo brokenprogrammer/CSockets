@@ -29,6 +29,7 @@
 #ifndef process_h
 #define process_h
 
+#include <unistd.h>
 #include <stdio.h>
 
 struct processes {

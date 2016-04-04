@@ -17,18 +17,28 @@
 		AB4B973C1CA5EF5100A3007E /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B973A1CA5EF5100A3007E /* debug.c */; };
 		AB4B973F1CA5EF6D00A3007E /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = AB4B973D1CA5EF6D00A3007E /* server.c */; };
 		AB6770471CA1D8720048CA31 /* process_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = AB6770451CA1D8720048CA31 /* process_handler.c */; };
-		AB9592CE1CB1A0DA00A4356B /* osx_window_handler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9592CD1CB1A0DA00A4356B /* osx_window_handler.m */; };
+		AB94B4EE1CB28C7C005B6805 /* libOSXWindowHandler.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94B4ED1CB289EC005B6805 /* libOSXWindowHandler.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB94B4EC1CB289EC005B6805 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB94B4E81CB289EC005B6805 /* OSXWindowHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB94B4DC1CB2898D005B6805;
+			remoteInfo = OSXWindowHandler;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AB461AC71C9B53140052743E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -54,8 +64,7 @@
 		AB4B973E1CA5EF6D00A3007E /* server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.h; sourceTree = "<group>"; };
 		AB6770451CA1D8720048CA31 /* process_handler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = process_handler.c; sourceTree = "<group>"; };
 		AB6770461CA1D8720048CA31 /* process_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_handler.h; sourceTree = "<group>"; };
-		AB9592CD1CB1A0DA00A4356B /* osx_window_handler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = osx_window_handler.m; sourceTree = "<group>"; };
-		AB9592CF1CB1A0F400A4356B /* osx_window_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_window_handler.h; sourceTree = "<group>"; };
+		AB94B4E81CB289EC005B6805 /* OSXWindowHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OSXWindowHandler.xcodeproj; path = OSXWindowHandler/OSXWindowHandler.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB94B4EE1CB28C7C005B6805 /* libOSXWindowHandler.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +82,7 @@
 		AB461AC01C9B53140052743E = {
 			isa = PBXGroup;
 			children = (
+				AB94B4E81CB289EC005B6805 /* OSXWindowHandler.xcodeproj */,
 				AB461ACB1C9B53140052743E /* CSockets */,
 				AB461ACA1C9B53140052743E /* Products */,
 			);
@@ -88,7 +99,6 @@
 		AB461ACB1C9B53140052743E /* CSockets */ = {
 			isa = PBXGroup;
 			children = (
-				AB9592CC1CB1A0AB00A4356B /* OSX */,
 				AB4570971CA2C55E00B7ADB1 /* options.h */,
 				AB461ACC1C9B53140052743E /* main.c */,
 				AB6770451CA1D8720048CA31 /* process_handler.c */,
@@ -113,13 +123,12 @@
 			path = CSockets;
 			sourceTree = "<group>";
 		};
-		AB9592CC1CB1A0AB00A4356B /* OSX */ = {
+		AB94B4E91CB289EC005B6805 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB9592CD1CB1A0DA00A4356B /* osx_window_handler.m */,
-				AB9592CF1CB1A0F400A4356B /* osx_window_handler.h */,
+				AB94B4ED1CB289EC005B6805 /* libOSXWindowHandler.dylib */,
 			);
-			name = OSX;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,12 +175,28 @@
 			mainGroup = AB461AC01C9B53140052743E;
 			productRefGroup = AB461ACA1C9B53140052743E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = AB94B4E91CB289EC005B6805 /* Products */;
+					ProjectRef = AB94B4E81CB289EC005B6805 /* OSXWindowHandler.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				AB461AC81C9B53140052743E /* CSockets */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		AB94B4ED1CB289EC005B6805 /* libOSXWindowHandler.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libOSXWindowHandler.dylib;
+			remoteRef = AB94B4EC1CB289EC005B6805 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AB461AC51C9B53140052743E /* Sources */ = {
@@ -183,7 +208,6 @@
 				AB4A91D31CA4877C00237097 /* database.c in Sources */,
 				AB4B973C1CA5EF5100A3007E /* debug.c in Sources */,
 				AB6770471CA1D8720048CA31 /* process_handler.c in Sources */,
-				AB9592CE1CB1A0DA00A4356B /* osx_window_handler.m in Sources */,
 				AB45709A1CA2D28E00B7ADB1 /* system_control.c in Sources */,
 				AB4B97361CA5EF1900A3007E /* process.c in Sources */,
 				AB4B97391CA5EF3B00A3007E /* user.c in Sources */,
@@ -277,6 +301,8 @@
 		AB461AD11C9B53140052743E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/oskarmendel/CSockets/OSXWindowHandler/OSXWindowHandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -284,6 +310,7 @@
 		AB461AD21C9B53140052743E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

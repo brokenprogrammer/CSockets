@@ -28,7 +28,6 @@
 #include "server.h"
 #include "process.h"
 #include <stdlib.h>
-#include "OSXWindowHandler.h"
 
 int main(int argc, const char * argv[]) {
     
@@ -49,9 +48,9 @@ int main(int argc, const char * argv[]) {
     showActiveProcesses(processList);
     */
     
-    printf("Sum of 1 and 2: %i\n", sum(1, 2));
     
-    //startServer();
+    
+    startServer();
     
     return 0;
 }

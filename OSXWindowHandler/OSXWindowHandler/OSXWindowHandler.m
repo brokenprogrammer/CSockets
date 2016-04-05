@@ -27,14 +27,28 @@
 
 #import "OSXWindowHandler.h"
 
-DL_INTERFACE int sum( int a, int b ) {
-    return a + b;
+DL_INTERFACE int sum( pid_t a, int b ) {
+    return [OSXWindowHandler sum:a :b];
 }
 
 @implementation OSXWindowHandler
 
-- (int) sum: (int) a :(int) b {
-    return a + b;
++ (int) sum: (pid_t) a :(int) b {
+    printf("IN OBJC: %i \n \n \n \n \n \n", a);
+    
+    SBApplication *vlc = [SBApplication applicationWithProcessIdentifier:a];
+    
+    if ([vlc isRunning]) {
+        printf("VLC is running");
+    }
+    NSWindow *topWindow = [[NSApplication sharedApplication] keyWindow];
+    [topWindow setTitle:@"CSockets"];
+    
+    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+    NSArray* arr = CFBridgingRelease(windowList);
+    
+    printf("In OBJC \n");
+    return 1;
 }
 
 @end

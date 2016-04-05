@@ -32,10 +32,12 @@
 #define DL_INTERFACE
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+#import <ScriptingBridge/ScriptingBridge.h>
 
 @interface OSXWindowHandler : NSObject
 
-- (int) sum: (int) a :(int) b;
++ (int) sum: (pid_t) a :(int) b;
 
 @end
 
@@ -43,6 +45,6 @@
 #define DL_INTERFACE extern
 #endif
 
-DL_INTERFACE int sum( int a, int b );
+DL_INTERFACE int sum( pid_t a, int b );
 
 #endif /* osxwindowhandler_h */

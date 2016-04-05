@@ -12,6 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB88B2121CB40FBE00FDF7FB /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		AB94B4DC1CB2898D005B6805 /* libOSXWindowHandler.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libOSXWindowHandler.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94B4DF1CB2898D005B6805 /* OSXWindowHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSXWindowHandler.h; sourceTree = "<group>"; };
 		AB94B4E11CB2898D005B6805 /* OSXWindowHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSXWindowHandler.m; sourceTree = "<group>"; };
@@ -31,6 +32,7 @@
 		AB94B4D31CB2898D005B6805 = {
 			isa = PBXGroup;
 			children = (
+				AB88B2121CB40FBE00FDF7FB /* ScriptingBridge.framework */,
 				AB94B4DE1CB2898D005B6805 /* OSXWindowHandler */,
 				AB94B4DD1CB2898D005B6805 /* Products */,
 			);
@@ -245,6 +247,7 @@
 				AB94B4E71CB2898D005B6805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

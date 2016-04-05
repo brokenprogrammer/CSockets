@@ -49,6 +49,7 @@ int main(int argc, const char * argv[]) {
     showActiveProcesses(processList);
     */
     
+    printf("Sum of 1 and 2: %i\n", sum(1, 2));
     
     //startServer();
     

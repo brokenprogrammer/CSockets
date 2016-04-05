@@ -27,6 +27,10 @@
 
 #import "OSXWindowHandler.h"
 
+DL_INTERFACE int sum( int a, int b ) {
+    return a + b;
+}
+
 @implementation OSXWindowHandler
 
 - (int) sum: (int) a :(int) b {

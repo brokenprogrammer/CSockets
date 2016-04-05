@@ -25,6 +25,12 @@
  * THE SOFTWARE.
  */
 
+#ifndef OSXWINDOWHANDLER_H
+#define OSXWINDOWHANDLER_H
+
+#ifdef __OBJC__
+#define DL_INTERFACE
+
 #import <Foundation/Foundation.h>
 
 @interface OSXWindowHandler : NSObject
@@ -32,3 +38,11 @@
 - (int) sum: (int) a :(int) b;
 
 @end
+
+#else
+#define DL_INTERFACE extern
+#endif
+
+DL_INTERFACE int sum( int a, int b );
+
+#endif /* osxwindowhandler_h */

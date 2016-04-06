@@ -46,21 +46,39 @@ DL_INTERFACE int setFullscreen(pid_t a) {
     
     for (NSRunningApplication *app in apps) {
         if ([app processIdentifier] == a) {
-            printf("Found VLC: %i", [app processIdentifier]);
-            [app hide];
+            printf("Found VLC: %i \n", [app processIdentifier]);
+            //[app hide];
             //[app unhide];
-            [NSThread sleepForTimeInterval:2.0f];
-            [app activateWithOptions:0];
-            [app activateWithOptions:1];
-            [app unhide];
+            //[NSThread sleepForTimeInterval:2.0f];
+            //[app activateWithOptions:0];
+            //[app activateWithOptions:1];
+            //[app unhide];
         }
     }
     
-    //NSWindow *topWindow = [[NSApplication sharedApplication] keyWindow];
-    //[topWindow setTitle:@"CSockets"];
+    NSMutableArray *windows = (NSMutableArray *)CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID));
     
-    //CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
-    //NSArray* arr = CFBridgingRelease(windowList);
+    NSMutableDictionary* arr = CFBridgingRelease(CFBridgingRetain(windows));
+    for (NSMutableDictionary* entry in arr) {
+        pid_t pid = [[entry objectForKey:(id)kCGWindowOwnerPID] intValue];
+        
+        printf("pid: %i \n", pid);
+        
+        if (pid == a) {
+            printf("SAME PIDS!\n");
+            AXUIElementRef elementRef = AXUIElementCreateApplication(pid);
+            CFTypeRef position;
+            CGPoint point;
+            
+            AXUIElementCopyAttributeValue(elementRef, kAXPositionAttribute, (CFTypeRef *)&position);
+            AXValueGetValue(position, kAXValueCGPointType, &point);
+            
+            NSLog(@"point=%@", point);
+            
+            //stackoverflow.com/questions/21069066/move-other-windows-on-mac-os-x-using-accessibility-api
+            //stackoverflow.com/questions/614185/window-move-and-rezise-apis-in-os-x
+        }
+    }
 
     return 1;
 }

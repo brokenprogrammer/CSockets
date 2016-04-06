@@ -37,7 +37,7 @@
 
 @interface OSXWindowHandler : NSObject
 
-+ (int) sum: (pid_t) a :(int) b;
++ (int) setFullscreen: (pid_t) a;
 
 @end
 
@@ -45,6 +45,6 @@
 #define DL_INTERFACE extern
 #endif
 
-DL_INTERFACE int sum( pid_t a, int b );
+DL_INTERFACE int setFullscreen(pid_t a);
 
 #endif /* osxwindowhandler_h */

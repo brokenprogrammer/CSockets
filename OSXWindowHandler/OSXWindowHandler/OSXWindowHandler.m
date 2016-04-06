@@ -27,27 +27,41 @@
 
 #import "OSXWindowHandler.h"
 
-DL_INTERFACE int sum( pid_t a, int b ) {
-    return [OSXWindowHandler sum:a :b];
+DL_INTERFACE int setFullscreen(pid_t a) {
+    [OSXWindowHandler setFullscreen:a];
+    return 1;
 }
 
 @implementation OSXWindowHandler
 
-+ (int) sum: (pid_t) a :(int) b {
++ (int) setFullscreen: (pid_t) a {
+    [NSThread sleepForTimeInterval:2.0f];
     printf("IN OBJC: %i \n \n \n \n \n \n", a);
     
-    SBApplication *vlc = [SBApplication applicationWithProcessIdentifier:a];
+    //SBApplication *vlc = [SBApplication applicationWithProcessIdentifier:a];
     
-    if ([vlc isRunning]) {
-        printf("VLC is running");
+    //[vlc activate];
+    
+    NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
+    
+    for (NSRunningApplication *app in apps) {
+        if ([app processIdentifier] == a) {
+            printf("Found VLC: %i", [app processIdentifier]);
+            [app hide];
+            //[app unhide];
+            [NSThread sleepForTimeInterval:2.0f];
+            [app activateWithOptions:0];
+            [app activateWithOptions:1];
+            [app unhide];
+        }
     }
-    NSWindow *topWindow = [[NSApplication sharedApplication] keyWindow];
-    [topWindow setTitle:@"CSockets"];
     
-    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
-    NSArray* arr = CFBridgingRelease(windowList);
+    //NSWindow *topWindow = [[NSApplication sharedApplication] keyWindow];
+    //[topWindow setTitle:@"CSockets"];
     
-    printf("In OBJC \n");
+    //CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+    //NSArray* arr = CFBridgingRelease(windowList);
+
     return 1;
 }
 

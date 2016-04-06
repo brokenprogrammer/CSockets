@@ -97,7 +97,7 @@ int system_launchApplication(char* c, struct processes *processList) {
         //system("/usr/bin/osascript -e 'tell application \"VLC\"' -e 'activate' -e 'tell application \"System Events\"' -e 'keystroke \"f\" using {control down, command down}' -e 'end tell' -e 'end tell'");
         
         //Trying to set window title:
-        printf("Sum of 1 and 2: %i\n", sum(a, 2));
+        printf("Sum of 1 and 2: %i\n", setFullscreen(a));
         
         printf("After systemcall\n");
         int r;

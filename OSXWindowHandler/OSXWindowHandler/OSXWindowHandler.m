@@ -32,6 +32,37 @@ DL_INTERFACE int setFullscreen(pid_t a) {
     return 1;
 }
 
+static bool amIAuthorized ()
+{
+    if (AXAPIEnabled()) {
+        /* Yehaa, all apps are authorized */
+        return true;
+    }
+    /* Bummer, it's not activated, maybe we are trusted */
+    if (AXIsProcessTrusted() != 0) {
+        /* Good news, we are already trusted */
+        return true;
+    }
+    /* Crap, we are not trusted...
+     * correct behavior would now be to become a root process using
+     * authorization services and then call AXMakeProcessTrusted() to make
+     * ourselves trusted, then restart... I'll skip this here for
+     * simplicity.
+     */
+    return false;
+}
+
+
+static AXUIElementRef getFrontMostApp ()
+{
+    pid_t pid;
+    ProcessSerialNumber psn;
+    
+    GetFrontProcess(&psn);
+    GetProcessPID(&psn, &pid);
+    return AXUIElementCreateApplication(pid);
+}
+
 @implementation OSXWindowHandler
 
 + (int) setFullscreen: (pid_t) a {
@@ -56,7 +87,7 @@ DL_INTERFACE int setFullscreen(pid_t a) {
         }
     }
     
-    NSMutableArray *windows = (NSMutableArray *)CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID));
+   /*NSMutableArray *windows = (NSMutableArray *)CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID));
     
     NSMutableDictionary* arr = CFBridgingRelease(CFBridgingRetain(windows));
     for (NSMutableDictionary* entry in arr) {
@@ -73,13 +104,81 @@ DL_INTERFACE int setFullscreen(pid_t a) {
             AXUIElementCopyAttributeValue(elementRef, kAXPositionAttribute, (CFTypeRef *)&position);
             AXValueGetValue(position, kAXValueCGPointType, &point);
             
-            NSLog(@"point=%@", point);
+            NSLog(@"point.x=%f point.y=%f", point.x, point.y);
             
+            CGPoint newPoint;
+            newPoint.x = 0;
+            newPoint.y = 0;
+            
+            position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&newPoint));
+            
+            AXUIElementSetAttributeValue(elementRef, kAXPositionAttribute, position);
+
             //stackoverflow.com/questions/21069066/move-other-windows-on-mac-os-x-using-accessibility-api
             //stackoverflow.com/questions/614185/window-move-and-rezise-apis-in-os-x
         }
-    }
+    }*/
+    
+    int i;
+    AXValueRef temp;
+    CGSize windowSize;
+    CGPoint windowPosition;
+    CFStringRef windowTitle;
+    AXUIElementRef frontMostApp;
+    AXUIElementRef frontMostWindow;
+    
+    //if (!amIAuthorized()) {
+      //  printf("Can't use accessibility API!\n");
+        //return 1;
+    //}
+    
+    NSDictionary *options = @{(id)CFBridgingRelease(kAXTrustedCheckOptionPrompt): @YES};
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((CFDictionaryRef)CFBridgingRetain(options));
 
+    if (accessibilityEnabled) {
+        printf("WE TRUSTED NOW\n");
+    }
+    
+    //frontMostApp = getFrontMostApp();
+    frontMostApp = AXUIElementCreateApplication(a);
+    
+    /* Get the front most window. We could also get an array of all windows
+     * of this process and ask each window if it is front most, but that is
+     * quite inefficient if we only need the front most window.
+     */
+    AXUIElementCopyAttributeValue(
+                                  frontMostApp, kAXFocusedWindowAttribute, (CFTypeRef *)&frontMostWindow
+                                  );
+    
+    /* Get the title of the window */
+    AXUIElementCopyAttributeValue(
+                                  frontMostWindow, kAXTitleAttribute, (CFTypeRef *)&windowTitle
+                                  );
+    
+    /* Get the window size and position */
+    AXUIElementCopyAttributeValue(
+                                  frontMostWindow, kAXSizeAttribute, (CFTypeRef *)&temp
+                                  );
+    AXValueGetValue(temp, kAXValueCGSizeType, &windowSize);
+    CFRelease(temp);
+    
+    AXUIElementCopyAttributeValue(
+                                  frontMostWindow, kAXPositionAttribute, (CFTypeRef *)&temp
+                                  );
+    AXValueGetValue(temp, kAXValueCGPointType, &windowPosition);
+    CFRelease(temp);
+    
+    /* Print everything */
+    printf("\n");
+    CFShow(windowTitle);
+    printf(
+           "Window is at (%f, %f) and has dimension of (%f, %f)\n",
+           windowPosition.x,
+           windowPosition.y,
+           windowSize.width,
+           windowSize.height
+           );
+    
     return 1;
 }
 

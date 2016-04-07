@@ -179,6 +179,23 @@ static AXUIElementRef getFrontMostApp ()
            windowSize.height
            );
     
+    
+    /* Move the window to the right by 25 pixels */
+    windowPosition.x += 25;
+    temp = AXValueCreate(kAXValueCGPointType, &windowPosition);
+    AXUIElementSetAttributeValue(frontMostWindow, kAXPositionAttribute, temp);
+    CFRelease(temp);
+    
+    windowSize.width += 400;
+    windowSize.height += 400;
+    temp = AXValueCreate(kAXValueCGSizeType, &windowSize);
+    AXUIElementSetAttributeValue(frontMostWindow, kAXSizeAttribute, temp);
+    CFRelease(temp);
+    
+    /* Clean up */
+    CFRelease(frontMostWindow);
+    CFRelease(frontMostApp);
+    
     return 1;
 }
 

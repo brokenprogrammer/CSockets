@@ -69,10 +69,6 @@ static AXUIElementRef getFrontMostApp ()
     [NSThread sleepForTimeInterval:2.0f];
     printf("IN OBJC: %i \n \n \n \n \n \n", a);
     
-    //SBApplication *vlc = [SBApplication applicationWithProcessIdentifier:a];
-    
-    //[vlc activate];
-    
     NSArray *apps = [[NSWorkspace sharedWorkspace] runningApplications];
     
     for (NSRunningApplication *app in apps) {
@@ -87,38 +83,6 @@ static AXUIElementRef getFrontMostApp ()
         }
     }
     
-   /*NSMutableArray *windows = (NSMutableArray *)CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID));
-    
-    NSMutableDictionary* arr = CFBridgingRelease(CFBridgingRetain(windows));
-    for (NSMutableDictionary* entry in arr) {
-        pid_t pid = [[entry objectForKey:(id)kCGWindowOwnerPID] intValue];
-        
-        printf("pid: %i \n", pid);
-        
-        if (pid == a) {
-            printf("SAME PIDS!\n");
-            AXUIElementRef elementRef = AXUIElementCreateApplication(pid);
-            CFTypeRef position;
-            CGPoint point;
-            
-            AXUIElementCopyAttributeValue(elementRef, kAXPositionAttribute, (CFTypeRef *)&position);
-            AXValueGetValue(position, kAXValueCGPointType, &point);
-            
-            NSLog(@"point.x=%f point.y=%f", point.x, point.y);
-            
-            CGPoint newPoint;
-            newPoint.x = 0;
-            newPoint.y = 0;
-            
-            position = (CFTypeRef)(AXValueCreate(kAXValueCGPointType, (const void *)&newPoint));
-            
-            AXUIElementSetAttributeValue(elementRef, kAXPositionAttribute, position);
-
-            //stackoverflow.com/questions/21069066/move-other-windows-on-mac-os-x-using-accessibility-api
-            //stackoverflow.com/questions/614185/window-move-and-rezise-apis-in-os-x
-        }
-    }*/
-    
     int i;
     AXValueRef temp;
     CGSize windowSize;
@@ -126,6 +90,9 @@ static AXUIElementRef getFrontMostApp ()
     CFStringRef windowTitle;
     AXUIElementRef frontMostApp;
     AXUIElementRef frontMostWindow;
+    
+    //int screenWidth = [[NSScreen mainScreen] frame].size.width;
+    //int screenHeight = [[NSScreen mainScreen] frame].size.height;
     
     //if (!amIAuthorized()) {
       //  printf("Can't use accessibility API!\n");
@@ -137,6 +104,8 @@ static AXUIElementRef getFrontMostApp ()
 
     if (accessibilityEnabled) {
         printf("WE TRUSTED NOW\n");
+    } else {
+        printf("We good now boys\n");
     }
     
     //frontMostApp = getFrontMostApp();
@@ -181,13 +150,14 @@ static AXUIElementRef getFrontMostApp ()
     
     
     /* Move the window to the right by 25 pixels */
-    windowPosition.x += 25;
+    windowPosition.x = 0;
+    windowPosition.y = 0;
     temp = AXValueCreate(kAXValueCGPointType, &windowPosition);
     AXUIElementSetAttributeValue(frontMostWindow, kAXPositionAttribute, temp);
     CFRelease(temp);
     
-    windowSize.width += 400;
-    windowSize.height += 400;
+    windowSize.width = 2000;
+    windowSize.height = 1000;
     temp = AXValueCreate(kAXValueCGSizeType, &windowSize);
     AXUIElementSetAttributeValue(frontMostWindow, kAXSizeAttribute, temp);
     CFRelease(temp);

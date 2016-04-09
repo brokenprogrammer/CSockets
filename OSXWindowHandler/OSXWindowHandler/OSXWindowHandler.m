@@ -27,11 +27,19 @@
 
 #import "OSXWindowHandler.h"
 
+/**
+ * setFullscreen
+ * C proxy function to call the Objective C function that sets the window of
+ * target OS X application to fullscreen.
+ */
 DL_INTERFACE int setFullscreen(pid_t a) {
     [OSXWindowHandler setFullscreen:a];
     return 1;
 }
 
+/**
+ *
+ */
 static bool amIAuthorized ()
 {
     if (AXAPIEnabled()) {
@@ -52,7 +60,9 @@ static bool amIAuthorized ()
     return false;
 }
 
-
+/**
+ *
+ */
 static AXUIElementRef getFrontMostApp ()
 {
     pid_t pid;
@@ -65,6 +75,9 @@ static AXUIElementRef getFrontMostApp ()
 
 @implementation OSXWindowHandler
 
+/**
+ *
+ */
 + (int) setFullscreen: (pid_t) a {
     [NSThread sleepForTimeInterval:2.0f];
     printf("IN OBJC: %i \n \n \n \n \n \n", a);

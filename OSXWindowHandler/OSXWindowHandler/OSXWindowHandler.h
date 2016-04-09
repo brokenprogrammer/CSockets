@@ -38,6 +38,9 @@
 
 @interface OSXWindowHandler : NSObject
 
+/**
+ *
+ */
 + (int) setFullscreen: (pid_t) a;
 
 @end
@@ -46,6 +49,11 @@
 #define DL_INTERFACE extern
 #endif
 
+/**
+ * setFullscreen
+ * C proxy function to call the Objective C function that sets the window of
+ * target OS X application to fullscreen.
+ */
 DL_INTERFACE int setFullscreen(pid_t a);
 
 #endif /* osxwindowhandler_h */

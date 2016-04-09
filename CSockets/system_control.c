@@ -90,14 +90,8 @@ int system_launchApplication(char* c, struct processes *processList) {
         pushProcess(&processList, "VLC", a);
         showActiveProcesses(processList);
         
-        //TODO: Send keystrokes to applications.
-        //system("/usr/bin/osascript -e \"tell application \"Finder\"\" -e \"set desktopSize to bounds of window of desktop\" -e \"end tell\" -e \"tell application \"Safari\"\" -e \"activate\" -e \"set bounds of window 1 to desktopSize\" -e \"end tell\"");
-        //system("/usr/bin/osascript -e \"tell application \"System Events\"\" -e \"set frontmost of process \"VLC\" to true\" -e \"keystroke \"1\" using command down\" -e \"delay 0.2\" -e \"end tell\" ");
-        
-        //system("/usr/bin/osascript -e 'tell application \"VLC\"' -e 'activate' -e 'tell application \"System Events\"' -e 'keystroke \"f\" using {control down, command down}' -e 'end tell' -e 'end tell'");
-        
-        //Trying to set window title:
-        printf("Sum of 1 and 2: %i\n", setFullscreen(a));
+        //Trying to set window to fullscreen:
+        printf("Setting fullscreen: %i\n", setFullscreen(a));
         
         printf("After systemcall\n");
         int r;

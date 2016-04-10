@@ -53,14 +53,33 @@ void *get_in_addr(struct sockaddr *sa) {
  *
  * @param s - String with command.
  */
-void readCommand(char* s, struct processes *processList) {
+void readCommand(char* s, struct processes *processList, int sockfd) {
+    char clientMessage[1000];
+    printf("Waiting for input %s\n", s);
+    
     if (strcmp(s, "system") == 0) {
         //Make system call
         system_runCommand("ls");
-    } else {
-        printf("Read a welcome message\n");
+    } if (strcmp(s, "start app") == 0 || strcmp(s, "start") == 0) {
+        if (send(sockfd, "Enter your target application: ", 31, 0) == -1) {
+            printf("Error sending message: %s\n", strerror(errno));
+        }
+        
+        //Recieve reply from client
+        if (recv(sockfd, clientMessage, 1000, 0) < 0) {
+            printf("Error recieving message: %s\n", strerror(errno));
+        }
+        
+        for (int x = 0; x <= strlen(clientMessage); x++) {
+            printf("%c", clientMessage[x]);
+        }
+        
         //Attempt to start VLC with movie in fullscreen.
         system_launchApplication("VLC", processList);
+    } else {
+        if (send(sockfd, "Unknown command\n", 16, 0) == -1) {
+            printf("Error sending message: %s\n", strerror(errno));
+        }
     }
 }
 
@@ -81,15 +100,18 @@ void getClientInput(int sockfd) {
     processList->pid = -1;
     processList->next = NULL;
     
-    while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
-        for (int x = 0; x < 20; x++) {
-            printf("%c", clientMessage[x]);
+    while (1) {
+        while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
+            for (int x = 0; x < strlen(clientMessage); x++) {
+                printf("%c", clientMessage[x]);
+            }
+            readCommand(clientMessage, processList, sockfd);
         }
-        readCommand(clientMessage, processList);
-    }
+        
     
-    if (readsize == 0) {
-        printf("Client disconnected\n");
+        if (readsize == 0) {
+            printf("Client disconnected\n");
+        }
     }
 }
 

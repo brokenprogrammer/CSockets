@@ -93,15 +93,15 @@ int system_launchApplication(char* c, struct processes *processList) {
         //Trying to set window to fullscreen:
         printf("Setting fullscreen: %i\n", setFullscreen(a));
         
-        printf("After systemcall\n");
-        int r;
-        waitpid(a, &r, 0);
+       // printf("After systemcall\n");
+       // int r;
+       // waitpid(a, &r, 0);
         
-        if (r == 0) {
-            printf("Child application terminated successfully\n");
-        } else {
-            printf("Child application terminated with error\n");
-        }
+        //if (r == 0) {
+            //printf("Child application terminated successfully\n");
+        //} else {
+            //printf("Child application terminated with error\n");
+        //}
     }
 
     return 0;

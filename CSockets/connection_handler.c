@@ -100,6 +100,11 @@ void getClientInput(int sockfd) {
     processList->pid = -1;
     processList->next = NULL;
     
+    //TODO:
+    //1. Server - Client Communication. (Type commands from client and server respond)
+    //2. Start VLC through know commands.
+    //3. End connection (Quit through command line).
+    
     while (1) {
         while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
             for (int x = 0; x < strlen(clientMessage); x++) {

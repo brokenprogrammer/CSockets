@@ -124,8 +124,10 @@ void getClientInput(int sockfd) {
     
     //TODO:
     //1. Server - Client Communication. (Type commands from client and server respond)
+    //1.5 Rewrite trim string function.
     //2. Start VLC through know commands.
     //3. End connection (Quit through command line).
+    //4. Fix warnings & errors.
     
     while (1) {
         while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {

@@ -46,6 +46,26 @@ void *get_in_addr(struct sockaddr *sa) {
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
 }
 
+char *trimwhitespace(char *str)
+{
+    char *end;
+    
+    // Trim leading space
+    while(isspace(*str)) str++;
+    
+    if(*str == 0)  // All spaces?
+        return str;
+    
+    // Trim trailing space
+    end = str + strlen(str) - 1;
+    while(end > str && isspace(*end)) end--;
+    
+    // Write new null terminator
+    *(end+1) = 0;
+    
+    return str;
+}
+
 /**
  * readCommand
  * Reads string commands and preforms actions depending on what command
@@ -57,22 +77,24 @@ void readCommand(char* s, struct processes *processList, int sockfd) {
     char clientMessage[1000];
     printf("Waiting for input %s\n", s);
     
+    s = trimwhitespace(s);
+    
     if (strcmp(s, "system") == 0) {
         //Make system call
         system_runCommand("ls");
-    } if (strcmp(s, "start app") == 0 || strcmp(s, "start") == 0) {
-        if (send(sockfd, "Enter your target application: ", 31, 0) == -1) {
-            printf("Error sending message: %s\n", strerror(errno));
-        }
+    } else if (strcmp(s, "start app") == 0 || strcmp(s, "start") == 0) {
+        //if (send(sockfd, "Enter your target application: ", 31, 0) == -1) {
+        //    printf("Error sending message: %s\n", strerror(errno));
+        //}
         
         //Recieve reply from client
-        if (recv(sockfd, clientMessage, 1000, 0) < 0) {
-            printf("Error recieving message: %s\n", strerror(errno));
-        }
+        //if (recv(sockfd, clientMessage, 1000, 0) < 0) {
+        //    printf("Error recieving message: %s\n", strerror(errno));
+        //}
         
-        for (int x = 0; x <= strlen(clientMessage); x++) {
-            printf("%c", clientMessage[x]);
-        }
+        //for (int x = 0; x <= strlen(clientMessage); x++) {
+        //    printf("%c", clientMessage[x]);
+        //}
         
         //Attempt to start VLC with movie in fullscreen.
         system_launchApplication("VLC", processList);
@@ -111,8 +133,10 @@ void getClientInput(int sockfd) {
                 printf("%c", clientMessage[x]);
             }
             readCommand(clientMessage, processList, sockfd);
+            if (send(sockfd, "Welcome", 7, 0) == -1) {
+                printf("Error sending welcome message: %s\n", strerror(errno));
+            }
         }
-        
     
         if (readsize == 0) {
             printf("Client disconnected\n");

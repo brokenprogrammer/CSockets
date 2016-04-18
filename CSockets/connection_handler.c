@@ -83,19 +83,36 @@ void readCommand(char* s, struct processes *processList, int sockfd) {
     if (strcmp(s, "systemm") == 0) {
         //Make system call
         system_runCommand("ls");
+        if (send(sockfd, "systemm", 7, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
         y = 1;
     } else if(strcmp(s, "system ls") == 0){
         system_runCommand("ls");
+        if (send(sockfd, "system ls", 9, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
         y = 1;
     } else if (strcmp(s, "start app VLC") == 0 || strcmp(s, "start") == 0) {
         //Attempt to start VLC with movie in fullscreen.
         system_launchApplication("VLC", processList);
+        if (send(sockfd, "VLC", 3, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
         y = 1;
     } else if (strcmp(s, "show processes") == 0) {
         showActiveProcesses(processList);
+        if (send(sockfd, "show processes", 14, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
+        y = 1;
     } else if (strcmp(s, "kill active processes") == 0) {
         killProcess(processList->pid);
         popProcess(&processList);
+        if (send(sockfd, "kill all", 8, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
+        y = 1;
     }
     
     if(y == 0) {
@@ -126,19 +143,13 @@ void getClientInput(int sockfd) {
     //TODO:
     //1. Server - Client Communication. (Type commands from client and server respond)
     //1.5 Rewrite trim string function.
-    //2. Start VLC through know commands.
+    //2. Start VLC through known commands.
     //3. End connection (Quit through command line).
     //4. Fix warnings & errors.
-    //5. Send from y == 0 is delayed sometimes.
-    //6. Client recieves 1 too many unknown command messages. (Try remove send from this function and place after
-    //                  each strcmp command in the readmessage function.
     
     while (1) {
         while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
             readCommand(clientMessage, processList, sockfd);
-            if (send(sockfd, "Welcoma", 7, 0) == -1) {
-                printf("Error sending welcome message: %s\n", strerror(errno));
-            }
         }
     
         if (readsize == 0) {

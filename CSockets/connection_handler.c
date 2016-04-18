@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netdb.h>
+#include <ctype.h>
 
 #include "system_control.h"
 #include "process.h"
@@ -44,6 +45,15 @@ void *get_in_addr(struct sockaddr *sa) {
     }
     
     return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
+
+/**
+ * trim
+ * My own function to trim whitespace out of a string.
+ */
+char *trim(char *str) {
+    
+    return str;
 }
 
 char *trimwhitespace(char *str)
@@ -141,8 +151,7 @@ void getClientInput(int sockfd) {
     processList->next = NULL;
     
     //TODO:
-    //1. Server - Client Communication. (Type commands from client and server respond)
-    //1.5 Rewrite trim string function.
+    //1. Rewrite trim string function.
     //2. Start VLC through known commands.
     //3. End connection (Quit through command line).
     //4. Fix warnings & errors.

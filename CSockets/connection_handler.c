@@ -123,6 +123,16 @@ void readCommand(char* s, struct processes *processList, int sockfd) {
             printf("Error sending welcome message: %s\n", strerror(errno));
         }
         y = 1;
+    } else if (strcmp(s, "quit") == 0) {
+        if (processList->pid != NULL) {
+            if (processList->name != NULL) {
+                killProcess(processList->pid);
+                popProcess(&processList);
+            }
+        }
+        if (send(sockfd, "quitting", 8, 0) == -1) {
+            printf("Error sending welcome message: %s\n", strerror(errno));
+        }
     }
     
     if(y == 0) {
@@ -163,7 +173,6 @@ void getClientInput(int sockfd) {
     
         if (readsize == 0) {
             printf("Client disconnected\n");
-            exit(0);
         }
     }
 }
@@ -210,6 +219,7 @@ void waitConnection (int sockfd) {
             destroyProcess();
         } else { // Parrent process
             printf("From Parrent\n");
+            //Make wait call here.
         }
     }
 }

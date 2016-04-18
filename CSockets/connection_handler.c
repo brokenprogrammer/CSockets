@@ -74,31 +74,32 @@ char *trimwhitespace(char *str)
  * @param s - String with command.
  */
 void readCommand(char* s, struct processes *processList, int sockfd) {
-    char clientMessage[1000];
-    printf("Waiting for input %s\n", s);
+    //char clientMessage[1000];
+    int y = 0;
+    printf("Waiting for input: %s", s);
     
     s = trimwhitespace(s);
     
-    if (strcmp(s, "system") == 0) {
+    if (strcmp(s, "systemm") == 0) {
         //Make system call
         system_runCommand("ls");
-    } else if (strcmp(s, "start app") == 0 || strcmp(s, "start") == 0) {
-        //if (send(sockfd, "Enter your target application: ", 31, 0) == -1) {
-        //    printf("Error sending message: %s\n", strerror(errno));
-        //}
-        
-        //Recieve reply from client
-        //if (recv(sockfd, clientMessage, 1000, 0) < 0) {
-        //    printf("Error recieving message: %s\n", strerror(errno));
-        //}
-        
-        //for (int x = 0; x <= strlen(clientMessage); x++) {
-        //    printf("%c", clientMessage[x]);
-        //}
-        
+        y = 1;
+    } else if(strcmp(s, "system ls") == 0){
+        system_runCommand("ls");
+        y = 1;
+    } else if (strcmp(s, "start app VLC") == 0 || strcmp(s, "start") == 0) {
         //Attempt to start VLC with movie in fullscreen.
         system_launchApplication("VLC", processList);
-    } else {
+        y = 1;
+    } else if (strcmp(s, "show processes") == 0) {
+        showActiveProcesses(processList);
+    } else if (strcmp(s, "kill active processes") == 0) {
+        killProcess(processList->pid);
+        popProcess(&processList);
+    }
+    
+    if(y == 0) {
+        y = 0;
         if (send(sockfd, "Unknown command\n", 16, 0) == -1) {
             printf("Error sending message: %s\n", strerror(errno));
         }
@@ -128,20 +129,21 @@ void getClientInput(int sockfd) {
     //2. Start VLC through know commands.
     //3. End connection (Quit through command line).
     //4. Fix warnings & errors.
+    //5. Send from y == 0 is delayed sometimes.
+    //6. Client recieves 1 too many unknown command messages. (Try remove send from this function and place after
+    //                  each strcmp command in the readmessage function.
     
     while (1) {
         while ((readsize = recv(sockfd, clientMessage, 1000, 0)) > 0) {
-            for (int x = 0; x < strlen(clientMessage); x++) {
-                printf("%c", clientMessage[x]);
-            }
             readCommand(clientMessage, processList, sockfd);
-            if (send(sockfd, "Welcome", 7, 0) == -1) {
+            if (send(sockfd, "Welcoma", 7, 0) == -1) {
                 printf("Error sending welcome message: %s\n", strerror(errno));
             }
         }
     
         if (readsize == 0) {
             printf("Client disconnected\n");
+            exit(0);
         }
     }
 }

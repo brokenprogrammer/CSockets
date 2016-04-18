@@ -53,7 +53,7 @@ int system_runCommand(char * c) {
     char command[50];
     
     //strcpy(command, "open -a VLC");
-    strcpy(command, "echo Hello World");
+    strcpy(command, c);
     
     system(command);
     

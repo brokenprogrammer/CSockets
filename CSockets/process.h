@@ -54,6 +54,11 @@ pid_t newProcess();
 void destroyProcess();
 
 /**
+ *
+ */
+int killProcess(pid_t pid);
+
+/**
  * pushProcess
  * Push a new processes struct in the target processes struct.
  *
